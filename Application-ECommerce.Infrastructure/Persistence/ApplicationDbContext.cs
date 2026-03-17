@@ -25,7 +25,7 @@ namespace Application_ECommerce.Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
-        public DbSet<CartHeader> CartHeader { get; set; }
+        public DbSet<CartHeader> CartHeaders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
