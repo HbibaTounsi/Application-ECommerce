@@ -1,5 +1,9 @@
 using Application_ECommerce.Core.Entities.Identity;
+using Application_ECommerce.Core.Interfaces.Repositories.Base;
+using Application_ECommerce.Core.Interfaces.Repositories;
 using Application_ECommerce.Infrastructure.Persistence;
+using Application_ECommerce.Infrastructure.Persistence.Repositories.Base;
+using Application_ECommerce.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +17,26 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+
+//Dependancy Injection 
+
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// Repositories
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+
+
+
 
 var app = builder.Build();
 
@@ -29,6 +53,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();   
 app.UseAuthorization();
 
 app.MapControllerRoute(
