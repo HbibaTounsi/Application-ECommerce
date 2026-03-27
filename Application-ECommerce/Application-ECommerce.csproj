@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application-ECommerce.App\Application-ECommerce.App.csproj" />
+    <ProjectReference Include="..\Application-ECommerce.Core\Application-ECommerce.Core.csproj" />
     <ProjectReference Include="..\Application-ECommerce.Infrastructure\Application-ECommerce.Infrastructure.csproj" />
   </ItemGroup>
 
