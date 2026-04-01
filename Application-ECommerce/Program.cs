@@ -7,6 +7,8 @@ using Application_ECommerce.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Application_ECommerce.App.Categories.Mapping;
+using Application_ECommerce.App.Categories.Interfaces;
+using Application_ECommerce.App.Categories.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,9 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+builder.Services.AddScoped<ICategoryService, CategoryServices>();
+
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile));
 
