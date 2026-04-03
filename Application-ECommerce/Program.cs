@@ -1,4 +1,5 @@
 using Application_ECommerce.Core.Entities.Identity;
+using Application_ECommerce.Core.Interfaces;
 using Application_ECommerce.Core.Interfaces.Repositories.Base;
 using Application_ECommerce.Core.Interfaces.Repositories;
 using Application_ECommerce.Infrastructure.Persistence;
@@ -9,6 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Application_ECommerce.App.Categories.Mapping;
 using Application_ECommerce.App.Categories.Interfaces;
 using Application_ECommerce.App.Categories.Services;
+using Application_ECommerce.App.Products.Interfaces;
+using Application_ECommerce.App.Products.Services;
+using Application_ECommerce.App.Cart.Interfaces;
+using Application_ECommerce.App.Cart.Services;
+using Application_ECommerce.App.Coupons.Interfaces;
+using Application_ECommerce.App.Coupons.Services;
+using Application_ECommerce.App.Orders.Interfaces;
+using Application_ECommerce.App.Orders.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +47,11 @@ builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryServices>();
+builder.Services.AddScoped<IProductServices, ProductServices>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICouponService, CouponServices>();
+builder.Services.AddScoped<IOrderServices, OrderServices>();
+builder.Services.AddScoped<IFileHelper, FileHelper>();
 
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(Application_ECommerce.Mapping.Category.CategoryMappingProfile));
