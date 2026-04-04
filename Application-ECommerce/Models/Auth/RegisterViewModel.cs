@@ -1,4 +1,4 @@
-﻿namespace Application_ECommerce.Models.Auth
+namespace Application_ECommerce.Models.Auth
 {
     public class RegisterViewModel
     {

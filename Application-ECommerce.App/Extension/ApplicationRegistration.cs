@@ -1,4 +1,4 @@
-﻿using Application_ECommerce.App.Cart.Interfaces;
+using Application_ECommerce.App.Cart.Interfaces;
 using Application_ECommerce.App.Cart.Mapping;
 using Application_ECommerce.App.Cart.Services;
 using Application_ECommerce.App.Categories.Interfaces;
@@ -13,6 +13,8 @@ using Application_ECommerce.App.Orders.Services;
 using Application_ECommerce.App.Products.Interfaces;
 using Application_ECommerce.App.Products.Mapping;
 using Application_ECommerce.App.Products.Services;
+using Application_ECommerce.App.Athentification.Interfaces;
+using Application_ECommerce.App.Athentification.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,7 @@ namespace Application_ECommerce.App.Extension
             services.AddScoped<ICouponService, CouponServices>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrderServices, OrderServices>();
+            services.AddScoped<IAuthService, AuthService>();
 
 
             //Register AutoMapper Profiles

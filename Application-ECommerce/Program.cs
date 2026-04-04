@@ -1,35 +1,18 @@
 using Application_ECommerce.Core.Entities.Identity;
-using Application_ECommerce.Core.Interfaces;
-using Application_ECommerce.Core.Interfaces.Repositories.Base;
-using Application_ECommerce.Core.Interfaces.Repositories;
+using Application_ECommerce.Core.Not_Mapped_Entities;
 using Application_ECommerce.Infrastructure.Persistence;
-using Application_ECommerce.Infrastructure.Persistence.Repositories.Base;
-using Application_ECommerce.Infrastructure.Persistence.Repositories;
+using Application_ECommerce.Infrastructure.Extension;
+using Application_ECommerce.App.Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Application_ECommerce.App.Categories.Mapping;
-using Application_ECommerce.App.Categories.Interfaces;
-using Application_ECommerce.App.Categories.Services;
-using Application_ECommerce.App.Products.Interfaces;
-using Application_ECommerce.App.Products.Services;
-using Application_ECommerce.App.Cart.Interfaces;
-using Application_ECommerce.App.Cart.Services;
-using Application_ECommerce.App.Coupons.Interfaces;
-using Application_ECommerce.App.Coupons.Services;
-using Application_ECommerce.App.Orders.Interfaces;
-using Application_ECommerce.App.Orders.Services;
-using Application_ECommerce.App.Athentification.Interfaces;
-using Application_ECommerce.App.Athentification.Services;
-using Application_ECommerce.Core.Interfaces.External;
-using Application_ECommerce.Infrastructure.Services;
+using Application_ECommerce.Mapping.Auth;
+using Application_ECommerce.Mapping.Category;
+using Application_ECommerce.Mapping.Coupon;
+using Application_ECommerce.Mapping.Home;
+using Application_ECommerce.Mapping.Product;
+using Application_ECommerce.App.Cart.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -37,32 +20,36 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-//Dependancy Injection 
+builder.Services.AddDbContext<ApplicationDbContext>(option =>
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+    options.Password.RequiredUniqueChars = 0;
+})
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+// Configuration des options d'email
+builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("EmailSettings"));
 
-// Repositories
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<ICouponRepository, CouponRepository>();
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+// Dependency Injection — Infrastructure (repositories, EmailSender, FileHelper...)
+builder.Services.AddInfrastructureRegistration(builder.Configuration);
 
-builder.Services.AddScoped<ICategoryService, CategoryServices>();
-builder.Services.AddScoped<IProductServices, ProductServices>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<ICouponService, CouponServices>();
-builder.Services.AddScoped<IOrderServices, OrderServices>();
-builder.Services.AddScoped<IFileHelper, FileHelper>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+// Dependency Injection — Application (services métier + AutoMapper profiles)
+builder.Services.AddApplicationRegistration();
 
-
-builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(Application_ECommerce.Mapping.Category.CategoryMappingProfile));
-
-
+builder.Services.AddAutoMapper(typeof(CategoryMappingProfile));
+builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
+builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
+builder.Services.AddAutoMapper(typeof(CouponMappingProfile));
+builder.Services.AddAutoMapper(typeof(CartMappingProfile));
+builder.Services.AddAutoMapper(typeof(HomeMappingProfile));
 
 var app = builder.Build();
 
@@ -70,7 +57,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -79,7 +65,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();   
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -87,3 +73,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+public partial class Program { }

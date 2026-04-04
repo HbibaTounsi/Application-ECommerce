@@ -1,4 +1,4 @@
-﻿﻿@using Application_ECommerce.Models.Auth
+@using Application_ECommerce.Models.Auth
 @model RegisterViewModel
 
 <form method="post">
@@ -6,6 +6,7 @@
         <div class="row text-center p-3">
             <h1>Register</h1>
         </div>
+        <div asp-validation-summary="All" class="text-danger text-center"></div>
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <input asp-for="Email" class="form-control" placeholder="Email..." />
