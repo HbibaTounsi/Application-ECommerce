@@ -18,6 +18,10 @@ using Application_ECommerce.App.Coupons.Interfaces;
 using Application_ECommerce.App.Coupons.Services;
 using Application_ECommerce.App.Orders.Interfaces;
 using Application_ECommerce.App.Orders.Services;
+using Application_ECommerce.App.Athentification.Interfaces;
+using Application_ECommerce.App.Athentification.Services;
+using Application_ECommerce.Core.Interfaces.External;
+using Application_ECommerce.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +56,8 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICouponService, CouponServices>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IFileHelper, FileHelper>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(Application_ECommerce.Mapping.Category.CategoryMappingProfile));

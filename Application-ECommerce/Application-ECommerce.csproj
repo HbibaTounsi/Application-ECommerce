@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Application-ECommerce.Infrastructure\Application-ECommerce.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapping\Auth\" />
-  </ItemGroup>
-
 </Project>
