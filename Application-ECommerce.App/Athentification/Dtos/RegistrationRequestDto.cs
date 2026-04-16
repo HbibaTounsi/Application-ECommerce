@@ -12,5 +12,7 @@ namespace Application_ECommerce.App.Athentification.Dtos
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string? Role { get; set; }
+        public string Address { get; set; }
+        public int ZipCode { get; set; }
     }
 }

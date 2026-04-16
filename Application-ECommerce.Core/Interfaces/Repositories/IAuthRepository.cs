@@ -1,4 +1,4 @@
-﻿using Application_ECommerce.Core.Entities.Identity;
+using Application_ECommerce.Core.Entities.Identity;
 
 namespace Application_ECommerce.Core.Interfaces.Repositories
 {

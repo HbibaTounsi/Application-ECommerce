@@ -1,4 +1,4 @@
-﻿using Application_ECommerce.App.Athentification.Dtos;
+using Application_ECommerce.App.Athentification.Dtos;
 using Application_ECommerce.App.Athentification.Interfaces;
 using Application_ECommerce.Core.Entities.Identity;
 using Application_ECommerce.Core.Interfaces.Repositories;
@@ -90,7 +90,9 @@ namespace Application_ECommerce.App.Athentification.Services
             {
                 UserName = registrationRequestDto.Email,
                 Email = registrationRequestDto.Email,
-                PhoneNumber = registrationRequestDto.PhoneNumber
+                PhoneNumber = registrationRequestDto.PhoneNumber,
+                Address = registrationRequestDto.Address,
+                ZipCode = registrationRequestDto.ZipCode
             };
 
             // Ajouter l'utilisateur

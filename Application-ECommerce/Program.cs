@@ -11,6 +11,8 @@ using Application_ECommerce.Mapping.Coupon;
 using Application_ECommerce.Mapping.Home;
 using Application_ECommerce.Mapping.Product;
 using Application_ECommerce.App.Cart.Mapping;
+using Application_ECommerce.Infrastructure.External;
+using Application_ECommerce.Core.Interfaces.External;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +30,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
+
 // Configuration des options d'email
 builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Dependency Injection — Infrastructure (repositories, EmailSender, FileHelper...)
 builder.Services.AddInfrastructureRegistration(builder.Configuration);

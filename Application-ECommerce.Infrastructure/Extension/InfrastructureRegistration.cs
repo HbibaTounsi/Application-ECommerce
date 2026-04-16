@@ -1,4 +1,4 @@
-﻿using Application_ECommerce.Core.Interfaces.Repositories.Base;
+using Application_ECommerce.Core.Interfaces.Repositories.Base;
 using Application_ECommerce.Core.Interfaces.Repositories;
 using Application_ECommerce.Core.Interfaces;
 using Application_ECommerce.Infrastructure.External;
@@ -31,6 +31,7 @@ namespace Application_ECommerce.Infrastructure.Extension
             services.AddScoped<ICouponRepository, CouponRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
 
             services.AddScoped<IFileHelper, FileHelper>();
 
